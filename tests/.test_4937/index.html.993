@@ -1,0 +1,11 @@
+<html>
+<head>
+  <title>Main Page</title>
+</head>
+<body>
+  <p>
+    Some text and a link to a <a href="http://localhost:45605/secondpage.html">second page</a>.
+    Also, a <a href="http://localhost:45605/nonexistent">broken link</a>.
+  </p>
+</body>
+</html>
