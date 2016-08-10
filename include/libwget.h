@@ -1485,7 +1485,7 @@ struct wget_http_response_t {
 	int
 		icy_metaint;
         int
-                follow : 1 //robots tag check
+                follow : 1; //robots tag check
 	short
 		major;
 	short
