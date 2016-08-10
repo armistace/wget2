@@ -1679,7 +1679,7 @@ void *downloader_thread(void *p)
 				break;
 			}
 			
-			if (resp->follow) {
+			if (!resp->follow) {
 				goto out;
 				break;
 			}

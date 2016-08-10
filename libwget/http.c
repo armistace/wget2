@@ -1255,9 +1255,9 @@ wget_http_response_t *wget_http_parse_response_header(char *buf)
 		case 'r':
 			if (!wget_strncasecmp_ascii(name, "robots", namelen)) {
 				if (!wget_strcasecmp_ascii(s, "nofollow") || !wget_strcasecmp_ascii(s, "none")) 
-					resp->follow = 1;					
+					resp->follow = 0;					
 				else 
-					resp->follow = 0;
+					resp->follow = 1;
 			}
 			break;
 		default:

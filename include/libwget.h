@@ -1484,6 +1484,9 @@ struct wget_http_response_t {
 		reason[32];
 	int
 		icy_metaint;
+        int 
+                follow : 1; //for meta robots, 0 is follow
+        
 	short
 		major;
 	short
