@@ -1484,8 +1484,6 @@ struct wget_http_response_t {
 		reason[32];
 	int
 		icy_metaint;
-	int
-		follow : 1 //detect the follow bit
 	short
 		major;
 	short
