@@ -15,7 +15,11 @@ WGET_TESTS = test$(EXEEXT) test-wget-1$(EXEEXT) test-restrict-ascii$(EXEEXT) tes
  test-idn-cmd$(EXEEXT) test-iri$(EXEEXT) test-iri-percent$(EXEEXT) test-iri-list$(EXEEXT) test-iri-forced-remote$(EXEEXT)\
  test-auth-basic$(EXEEXT) test-parse-html$(EXEEXT) test-parse-rss$(EXEEXT) test--page-requisites$(EXEEXT)\
  test--accept$(EXEEXT) test-k$(EXEEXT) test--follow-tags$(EXEEXT) test-directory-clash$(EXEEXT) test-redirection$(EXEEXT)\
+<<<<<<< HEAD
  test-base$(EXEEXT) test-metalink$(EXEEXT) test-robots$(EXEEXT) test-parse-css$(EXEEXT)
+=======
+ test-base$(EXEEXT) test-metalink$(EXEEXT) test-robots-andrew$(EXEEXT)
+>>>>>>> hopefuly all?
 
 #test--post-file test-E-k test-cookies-http_state
 

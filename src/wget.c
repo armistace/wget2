@@ -1678,6 +1678,11 @@ void *downloader_thread(void *p)
 				action = ACTION_ERROR;
 				break;
 			}
+			
+			if (resp->follow) {
+				goto out;
+				break;
+			}
 
 			host_reset_failure(host);
 
