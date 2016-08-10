@@ -1252,6 +1252,14 @@ wget_http_response_t *wget_http_parse_response_header(char *buf)
 				wget_http_parse_etag(s, &resp->etag);
 			}
 			break;
+		case 'r':
+			if (!wget_strncasecmp_ascii(name, "robots", namelen)) {
+				if (!wget_strcasecmp_ascii(s, "nofollow") || !wget_strcasecmp_ascii(s, "none")) 
+					resp->follow = 1;					
+				else 
+					resp->follow = 0;
+			}
+			break;
 		default:
 			break;
 		}
@@ -1734,6 +1742,12 @@ static int _on_header_callback(nghttp2_session *session G_GNUC_WGET_UNUSED,
 							wget_vector_set_destructor(resp->digests, (void(*)(void *))wget_http_free_digest);
 						}
 						wget_vector_add(resp->digests, &digest, sizeof(digest));
+					}
+					else if (!memcmp(name, "robots", namelen)) {
+						if (!wget_strcasecmp_ascii(s, "nofollow") || !wget_strcasecmp_ascii(s, "none")) 
+							resp->follow = 0;
+						else 
+							resp->follow = 1;
 					}
 					break;
 				case 7:
