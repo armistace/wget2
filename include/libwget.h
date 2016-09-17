@@ -1484,14 +1484,14 @@ struct wget_http_response_t {
 		reason[32];
 	int
 		icy_metaint;
-        int
-                follow : 1; //robots tag check
 	short
 		major;
 	short
 		minor;
 	short
 		code; // request only status code
+    unsigned char
+        follow : 1; //robots meta tag check
 	char
 		transfer_encoding,
 		content_encoding,
