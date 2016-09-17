@@ -298,6 +298,7 @@ CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS =     -I/usr/include/p11-kit-1 
 CFLAG_VISIBILITY = -fvisibility=hidden
+CONFIG_INCLUDE = config.h
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
