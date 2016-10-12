@@ -1823,7 +1823,11 @@ static int _on_header_callback(nghttp2_session *session G_GNUC_WGET_UNUSED,
 					if (!memcmp(name, "content-length", namelen)) {
 						resp->content_length = (size_t)atoll(s);
 						resp->content_length_valid = 1;
+<<<<<<< HEAD
 >>>>>>> hopefuly all?
+=======
+>>>>>>> 6f412a05db3ef119775ae155285e68e51c8f0163
+>>>>>>> ccd4f0fc43a98301660dc4ac3de51a2e6fc4cbca
 					}
 					wget_vector_add(resp->links, &link, sizeof(link));
 				}

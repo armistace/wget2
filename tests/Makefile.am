@@ -19,7 +19,11 @@ WGET_TESTS = test$(EXEEXT) test-wget-1$(EXEEXT) test-restrict-ascii$(EXEEXT) tes
  test-base$(EXEEXT) test-metalink$(EXEEXT) test-robots$(EXEEXT) test-parse-css$(EXEEXT)
 =======
  test-base$(EXEEXT) test-metalink$(EXEEXT) test-robots-andrew$(EXEEXT)
+<<<<<<< HEAD
 >>>>>>> hopefuly all?
+=======
+>>>>>>> 6f412a05db3ef119775ae155285e68e51c8f0163
+>>>>>>> ccd4f0fc43a98301660dc4ac3de51a2e6fc4cbca
 
 #test--post-file test-E-k test-cookies-http_state
 
