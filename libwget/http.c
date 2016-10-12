@@ -1252,6 +1252,14 @@ wget_http_response_t *wget_http_parse_response_header(char *buf)
 				wget_http_parse_etag(s, &resp->etag);
 			}
 			break;
+		case 'r':
+			if (!wget_strncasecmp_ascii(name, "robots", namelen)) {
+				if (!wget_strcasecmp_ascii(s, "nofollow") || !wget_strcasecmp_ascii(s, "none")) 
+					resp->follow = 0;					
+				else 
+					resp->follow = 1;
+			}
+			break;
 		default:
 			break;
 		}
@@ -1707,6 +1715,7 @@ static int _on_header_callback(nghttp2_session *session G_GNUC_WGET_UNUSED,
 			resp->header = wget_buffer_alloc(1024);
 	}
 
+<<<<<<< HEAD
 	if (frame->hd.type == NGHTTP2_HEADERS) {
 		if (frame->headers.cat == NGHTTP2_HCAT_RESPONSE) {
 			const char *s = wget_strmemdup((char *) value, valuelen);
@@ -1728,6 +1737,93 @@ static int _on_header_callback(nghttp2_session *session G_GNUC_WGET_UNUSED,
 					if (!resp->links) {
 						resp->links = wget_vector_create(8, 8, NULL);
 						wget_vector_set_destructor(resp->links, (void(*)(void *))wget_http_free_link);
+=======
+				switch (namelen) {
+				case 4:
+					if (!memcmp(name, "etag", namelen)) {
+						wget_http_parse_etag(s, &resp->etag);
+					}
+					else if (!memcmp(name, "link", namelen) && resp->code / 100 == 3) {
+						// debug_printf("s=%.31s\n",s);
+						wget_http_link_t link;
+						wget_http_parse_link(s, &link);
+						// debug_printf("link->uri=%s\n",link.uri);
+						if (!resp->links) {
+							resp->links = wget_vector_create(8, 8, NULL);
+							wget_vector_set_destructor(resp->links, (void(*)(void *))wget_http_free_link);
+						}
+						wget_vector_add(resp->links, &link, sizeof(link));
+					}
+					break;
+				case 6:
+					if (!memcmp(name, "digest", namelen)) {
+						// http://tools.ietf.org/html/rfc3230
+						wget_http_digest_t digest;
+						wget_http_parse_digest(s, &digest);
+						// debug_printf("%s: %s\n",digest.algorithm,digest.encoded_digest);
+						if (!resp->digests) {
+							resp->digests = wget_vector_create(4, 4, NULL);
+							wget_vector_set_destructor(resp->digests, (void(*)(void *))wget_http_free_digest);
+						}
+						wget_vector_add(resp->digests, &digest, sizeof(digest));
+					}
+					else if (!memcmp(name, "robots", namelen)) {
+						if (!wget_strcasecmp_ascii(s, "nofollow") || !wget_strcasecmp_ascii(s, "none")) 
+							resp->follow = 0;
+						else 
+							resp->follow = 1;
+					}
+					break;
+				case 7:
+					if (!memcmp(name, ":status", namelen) && valuelen == 3) {
+						resp->code = ((value[0] - '0') * 10 + (value[1] - '0')) * 10 + (value[2] - '0');
+					}
+					break;
+				case 8:
+					if (resp->code / 100 == 3 && !memcmp(name, "location", namelen)) {
+						xfree(resp->location);
+						wget_http_parse_location(s, &resp->location);
+					}
+					break;
+				case 10:
+					if (!memcmp(name, "set-cookie", namelen)) {
+						// this is a parser. content validation must be done by higher level functions.
+						wget_cookie_t cookie;
+						wget_http_parse_setcookie(s, &cookie);
+
+						if (cookie.name) {
+							if (!resp->cookies) {
+								resp->cookies = wget_vector_create(4, 4, NULL);
+								wget_vector_set_destructor(resp->cookies, (void(*)(void *))wget_cookie_deinit);
+							}
+							wget_vector_add(resp->cookies, &cookie, sizeof(cookie));
+						}
+					}
+					else if (!memcmp(name, "connection", namelen)) {
+						wget_http_parse_connection(s, &resp->keep_alive);
+					}
+					break;
+				case 11:
+					if (!memcmp(name, "icy-metaint", namelen)) {
+						resp->icy_metaint = atoi(s);
+					}
+					break;
+				case 12:
+					if (!memcmp(name, "content-type", namelen)) {
+						wget_http_parse_content_type(s, &resp->content_type, &resp->content_type_encoding);
+					}
+					break;
+				case 13:
+					if (!memcmp(name, "last-modified", namelen)) {
+						// Last-Modified: Thu, 07 Feb 2008 15:03:24 GMT
+						resp->last_modified = wget_http_parse_full_date(s);
+					}
+					break;
+				case 14:
+					if (!memcmp(name, "content-length", namelen)) {
+						resp->content_length = (size_t)atoll(s);
+						resp->content_length_valid = 1;
+>>>>>>> 6f412a05db3ef119775ae155285e68e51c8f0163
 					}
 					wget_vector_add(resp->links, &link, sizeof(link));
 				}
